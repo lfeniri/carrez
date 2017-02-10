@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Comparaison Prix bien</title>
+  <meta name="description" content="comparer le prix appartement / maison d'une offre sur leboncoin" />
+  <meta name="keywords" content="achat, vente, maison, appartement, leboncoin, comparer, bien, immobilieres" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="./style/main.css" type="text/css" />
+  <link rel="stylesheet" href="./style/bootstrap.css" type="text/css" />
+</head>
+<script>
+
+  /****** AUTOCOMPLETE pour les ville avec le code postal *********/
+
+  $( function() {
+   $('#location').autocomplete({
+    source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
+	$.ajax({
+            url : 'http://localhost:3000/getCity',
+            dataType : 'text',
+            data : {
+                zip : $('#location').val()
+            },
+
+            success : function(donnee){
+
+				var tab = JSON.parse(donnee);
+                reponse(tab);
+
+            }
+        });
+    }
+});
+  } );
+
+/****** Search function  *********/
+function search() {
+	var location = $("#location").val();
+	var surface = $("#surface").val();
+	var type = $("input[name='type']").val();
+
+	$.ajax({
+            url : 'http://localhost:3000/getBest', // on appelle le script JSON
+            dataType : 'text', // on spécifie bien que le type de données est en JSON
+            data : {
+                //zip : $('#location').val() // on donne la chaîne de caractère tapée dans le champ de recherche
+				city: location,
+				surface: surface,
+				type: type
+			},
+
+            success : function(donnee){
+				console.log(JSON.parse(donnee));
+				var results = JSON.parse(donnee) ;
+        $("#links").html("");
+        for(var i in results){
+          $("#links").append("<div class='container'>"+
+            "<div class='panel-group'>"+
+              "<div class='panel panel-default'>"+
+              "<div class='panel-heading'>"+
+              "<h4 class='panel-title'>"+
+              "<a href='"+results[i].href+"'>"+results[i].title+"</a>"+
+                  "</h4>"+
+                "</div>"+
+                  "<div class='panel-body'>"+
+                    "<li>"+
+                        "<ul>Price :"+results[i].price+" </ul>"+
+                    "</li>"+
+                  "</div>"+
+                "</div>"+
+            "</div>"+
+          "</div>"+
+          "<br/>");
+        }
+        $('.result').css('display', 'block');
+        var offset = $("#result").offset().top 
+		$('html, body').animate({scrollTop: offset}, 'slow');
+			}
+        });
+}
+
+  </script>
+
+
+<body>
+  <div id="head" class="header">
+    <table>
+      <tr>
+        <td><a class="logo" href="index.html"><img src="./Icons/icon3.png" width="80px" height="80px" /></a></td>
+        <td><h1>Search for bests ads </h1></td>
+      </tr>
+    </table>
+  </div>
+  <div id="form" class="best_ad">
+        <div class="baseline_container_best">
+            <div class=" form_wrapper_best container"><br/><br/>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                      <table width="100%">
+                        <tr>
+                          <td>
+                        	    <input id="location" class="form-control location" placeholder="Enter a Postal Code" ><br/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                        	    <input id="surface" class="form-control" placeholder="Enter a surface">
+                          </td>
+                        </tr>
+                        <tr>
+
+                          <td>
+                            <label> Type : </<Label>
+                            <input type="radio" name="type" class="choice" value="appartement"> Appartement
+                            <input type="radio" name="type" class="choice" value="maison"> Maison
+                          </td>
+                          <td><button id="compute" class="button_icon" onclick="search()"></button></td>
+                        </tr>
+                      </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+  <div id="result" class="result">
+    <div class="panel-default">
+      <div class="panel-heading">
+        <h2 class="panel-title">Result:  <span id="title"></span></h2>
+    </div>
+    <div class="panel-body">
+      <div id="links"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

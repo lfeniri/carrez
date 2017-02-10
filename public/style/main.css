@@ -1,0 +1,203 @@
+
+/* Common */
+html{
+background: #eee;
+}
+
+.header{
+  position: relative;
+  z-index: 100;
+  height: 80px;
+  width: 100%;
+  font-weight: bold;
+  font-size: 13px;
+  background: #fff;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.15);
+}
+
+.header h1{
+  letter-spacing: 4px;
+  font-family: "Segoe UI",Arial,sans-serif;
+  float: right!important;
+  right: 10px;
+  position: absolute;
+  top:0;
+}
+
+.layer {
+    position: relative;
+    background-color: #3c465a;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat !important;
+}
+
+
+.baseline_container {
+    background-position: center center;
+    position: relative;
+    min-height: 200px;
+    height: 560px;
+    width: 100% ;
+    max-height: calc(100vh - 150px);
+
+}
+
+.form_wrapper {
+  display: block ;
+  height: 100%;
+  width: 100% ;
+  text-align: center ;
+}
+
+.button_icon{
+background-image: url('../Icons/square-search.png');
+width: 45px;
+height: 45px;
+background-size: cover;
+border-radius:50%;
+float:right;
+margin-right: 10px;
+}
+
+
+/* Home Page */
+
+.link_home{
+    background-image: url('../Icons/home.jpg') !important;
+}
+
+.home_choice{
+  position: relative;
+  min-height: 200px;
+  height: 560px;
+  width: 100% ;
+  max-height: calc(100vh - 150px);
+}
+.home_button{
+ margin-right:30px;
+ font-size: 60px;
+ bottom: 0 !important;
+
+}
+
+.form_wrapper_home {
+    position: absolute;
+    bottom: 0 ;
+    display: block ;
+    height: 25%;
+    width:  100% !important;
+    background: rgba(255,255,255,0.5);
+}
+
+h4{
+    text-align: center;
+    line-height: 5px;
+}
+
+/* Link Search */
+.price_analyse{
+  width: 50%;
+
+}
+.deal{
+
+font-size: 20px;
+}
+
+.minimum{
+font-size: 20px;
+}
+
+.maximum{
+  font-size: 20px;
+}
+
+.link_search{
+    background-image: url('../Icons/house.jpg') !important;
+}
+
+.form_wrapper_search {
+    position: absolute;
+    bottom: 0 ;
+    display: block ;
+    height: 35%;
+    width:  100% !important;
+    background: rgba(0,0,10,0.7);
+}
+
+.result{
+  display: none;
+}
+
+/* Best Ad  */
+.baseline_container_best {
+    background-position: center center;
+    position: relative;
+    min-height: 200px;
+    height: 600px;
+    width: 100% ;
+    max-height: calc(100vh - 150px);
+
+}
+
+.choice{
+  margin-left: 10px !important;
+}
+
+.form_wrapper_best {
+    position: absolute;
+    bottom: 0 ;
+    display: block ;
+    height: 50%;
+    width:  100% !important;
+    background: rgba(0,0,10,0.7);
+}
+.best_ad{
+    background-image: url('../Icons/appart.jpg') !important;
+    background-position:bottom center !important;
+}
+.location {
+   max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;}
+.ui-autocomplete {
+   position: absolute;
+   cursor: default;
+  background:#CCC }
+
+/* workarounds */
+html .ui-autocomplete {
+   width:1px;
+   } /* without this, the menu expands to 100% in IE6 */
+.ui-menu {
+    list-style:none;
+    padding: 2px;
+    margin: 0;
+    display:block;
+    float: left;
+}
+.ui-menu .ui-menu {
+    margin-top: -3px;
+}
+.ui-menu .ui-menu-item {
+    margin:0;
+    padding: 0;
+    zoom: 1;
+    float: left;
+    clear: left;
+    width: 100%;
+}
+.ui-menu .ui-menu-item a {
+    text-decoration:none;
+    display:block;
+    padding:.2em .4em;
+    line-height:1.5;
+    zoom:1;
+}
+.ui-menu .ui-menu-item a.ui-state-hover,
+.ui-menu .ui-menu-item a.ui-state-active {
+    font-weight: normal;
+    margin: -1px;
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Comparaison Prix bien</title>
+  <meta name="description" content="comparer le prix appartement / maison d'une offre sur leboncoin" />
+  <meta name="keywords" content="achat, vente, maison, appartement, leboncoin, comparer, bien, immobilieres" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="./style/main.css" type="text/css" />
+<link rel="stylesheet" href="./style/bootstrap.css" type="text/css" />
+</head>
+
+  <script>
+	function search() {
+	var url_search = $("#url").val();
+	$.ajax({
+            url : 'http://localhost:3000/getData', // on appelle le script JSON
+            dataType : 'text', // on spécifie bien que le type de données est en JSON
+            data : {
+                //zip : $('#location').val() // on donne la chaîne de caractère tapée dans le champ de recherche
+				url: url_search
+			},
+
+        success : function(donnee){
+				console.log(JSON.parse(donnee));
+        $("#min").html(JSON.parse(donnee).meilleursAgents.bas);
+        $("#max").html(JSON.parse(donnee).meilleursAgents.haut);
+				$("#title").html(JSON.parse(donnee).leboncoin.titre.replace('_',' '));
+				$("#deal").html(JSON.parse(donnee).leboncoin.prixM2);
+        $("#price").html(JSON.parse(donnee).leboncoin.prix);
+        $("#surface").html(JSON.parse(donnee).leboncoin.surface);
+        $("#city").html(JSON.parse(donnee).leboncoin.ville);
+        $("#rooms").html(JSON.parse(donnee).leboncoin.pieces);
+        $("#department").html(JSON.parse(donnee).leboncoin.departement);
+        var deal = JSON.parse(donnee).deal;
+        if(parseInt(deal) == 1){
+          $("#message").html("This deal is a good deal ! ");
+          $('#deal').css('color', 'green');
+          $('#message').css('color', 'red');
+        }
+        else if (parseInt(deal) == -1 ) {
+          $('#deal').css('color', 'red');
+          $("#message").html("This deal is a bad one ! ");
+          $('#message').css('color', 'red');
+        }
+        else{
+          $('#deal').css('color', 'blue');
+          $("#message").html("This deal is correct ! ");
+          $('#message').css('color', 'red');
+        }
+
+        $('.result').css('display', 'block');
+		
+		var offset = $("#result").offset().top 
+		$('html, body').animate({scrollTop: offset}, 'slow');
+		
+            }
+        });
+}
+  </script>
+
+<body>
+  <div id="head" class="header">
+    <table>
+      <tr>
+        <td><a class="logo" href="index.html"><img src="./Icons/icon3.png" width="80px" height="80px" /></a></td>
+        <td><h1>Evaluate an ad </h1></td>
+      </tr>
+    </table>
+  </div>
+  <div id="form" class="link_search">
+        <div class="baseline_container">
+            <div class=" form_wrapper_search container"><br/><br/>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                      <table width="100%">
+                        <tr>
+                          <td><input id="url"class="form-control" placeholder="Paste your URL"></td>
+                          <td><button id="compute" class="button_icon" onclick="search()"></button></td>
+                        </tr>
+                      </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+  <div id="result" class="result" >
+    <div class="panel-default">
+      <div class="panel-heading">
+        <h2 class="panel-title">Result for ad :  <span id="title"></span></h2>
+    </div>
+    <div class="panel-body">
+        <h2> Price Analyse : </h2>
+        <table class="price_analyse">
+        <tr>
+          <td><span id="min" class="minimum"></span></td>
+          <td><span id="deal" class="deal"></span></td>
+          <td><span id="max" class="maximum"></span></td>
+        </tr>
+        <tr>
+          <td>min</span></td>
+          <td>price</td>
+          <td>max</td><br/>
+        </tr>
+        <tr><td><span id="message"></span></td></tr>
+      </table>
+      <table>
+        <tr>
+          <td><h2> Ad Information : </h2> </td>
+        </tr>
+        <tr>
+          <td> Location : </td>
+          <td><span id="city"></span>,<span id="department"></span></td>
+        </tr>
+        <tr>
+          <td> Price : </td>
+          <td><span id="price"></span></td>
+        </tr>
+        <tr>
+          <td>Rooms : </td>
+          <td> <span id="rooms"></span></td>
+        </tr>
+        <tr>
+          <td>Surface : </td>
+          <td> <span id="surface"></span>m2</td>
+        </tr>
+      </table>
+    </div>
+    </div>
+  </div>
+</body>
+</html>
